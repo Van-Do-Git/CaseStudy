@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quan ly kho</title>
+</head>
+<body>
+<h1 align="center">QUẢN LÝ KHO HÀNG</h1>
+<form action="">
+    <fieldset style="width: 300px;">
+    <legend>Creat a new product</legend>
+    <table>
+        <tr>
+            <td>
+                NameProduct:
+            </td>
+            <td>
+                <input type="text" id="name">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Quantity:
+            </td>
+            <td>
+                <input type="text" id="quantity">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Unit Price:
+            </td>
+            <td>
+                <input type="text" id="price">
+            </td>
+        </tr>
+    </table>
+    <button onclick="Add()" style="left: 212px;position: relative" type="button">Addnew</button>
+    </fieldset>
+</form>
+<br>
+<button onclick="displayProduct()";>Kho Hàng</button>
+<div id="bang">
+<table>
+    <tr>
+        <td>
+            STT
+        </td>
+        <td>
+            NameProduct
+        </td>
+        <td>
+            Quantity
+        </td>
+        <td>
+            Unit Price
+        </td>
+        <td>
+            Sale
+        </td>
+        <td>
+            Inventory
+        </td>
+        <td>
+            Edit
+        </td>
+        <td>
+            Delete
+        </td>
+    </tr>
+    <tbody id="body">
+
+    </tbody>
+</table>
+</div>
+<br>
+<script>
+    class Products{
+        constructor(name,price,quantity) {
+            this.name=name;
+            this.price=price;
+            this.quantity=quantity;
+
+        }
+    }
+    let listproducts =[];
+    let Iphone6= new Products("Iphone6",1500,30);
+    let Iphone7= new Products("Iphone7",1550,50);
+    let Iphone8= new Products("Iphone8",1600,80);
+    listproducts.push(Iphone6,Iphone7,Iphone8);
+
+    function displayProduct(){
+        let body="";
+        for (let i = 0; i < listproducts.length; i++) {
+            body+=
+                "<tr>" +
+                "<td>"+(i+1)+"</td>" +
+                "<td>"+listproducts[i].name+"</td>"+
+                "<td>"+listproducts[i].quantity+"</td>"+
+                "<td>"+listproducts[i].price+"</td>"+
+                "</tr>";
+        }
+        document.getElementById("body").innerHTML=body;
+    }
+    function Add() {
+        let addnew = new Products();
+        addnew.name = document.getElementById("name").value;
+        addnew.quantity = document.getElementById("quantity").value;
+        addnew.price = document.getElementById("price").value;
+        if (addnew.name==""||
+        addnew.quantity==""||
+        addnew.price==""){
+            setTimeout(alert("Bạn hãy điền đầy đủ thông tin sản phản trước khi Add"),2000);
+        }else{
+            listproducts.push(addnew);
+            displayProduct();
+        }
+
+    }
+
+</script>
+</body>
+</html>
