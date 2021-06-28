@@ -3,114 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <title>Quan ly kho</title>
+    <style>
+        td {
+            text-align: center;
+        }
+
+        tr {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <h1 align="center">QUẢN LÝ KHO HÀNG</h1>
 <form action="">
     <fieldset style="width: 300px;">
-    <legend>Creat a new product</legend>
-    <table>
-        <tr>
-            <td>
-                NameProduct:
-            </td>
-            <td>
-                <input type="text" id="mobie">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Quantity:
-            </td>
-            <td>
-                <input type="text" id="quantity">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Unit Price:
-            </td>
-            <td>
-                <input type="text" id="price">
-            </td>
-        </tr>
-    </table>
-    <button onclick="Add()" style="left: 212px;position: relative" type="button">Addnew</button>
+        <legend>Creat a new product</legend>
+        <table>
+            <tr>
+                <td>
+                    NameProduct:
+                </td>
+                <td>
+                    <input type="text" id="mobie">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Dicreption:
+                </td>
+                <td>
+                    <input type="text" id="link">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Quantity:
+                </td>
+                <td>
+                    <input type="text" id="quantity">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Unit Price:
+                </td>
+                <td>
+                    <input type="text" id="price">
+                </td>
+            </tr>
+        </table>
+        <button onclick="Add()" style="left: 212px;position: relative" type="button">Addnew</button>
     </fieldset>
 </form>
 <br>
-<button onclick="displayProduct()";>Kho Hàng</button>
+<button onclick="displayProduct()" ;>Kho Hàng</button>
 <div id="bang">
-<table>
-    <tr>
-        <td>
-            STT
-        </td>
-        <td>
-            NameProduct
-        </td>
-        <td>
-            Quantity
-        </td>
-        <td>
-            Import Price
-        </td>
-        <td>
-            Price
-        </td>
-        <td>
-            Sale
-        </td>
-        <td>
-            Inventory
-        </td>
-        <td>
-            Edit
-        </td>
-        <td>
-            Delete
-        </td>
-    </tr>
-    <tbody id="body">
+    <table>
+        <tr>
+            <td>
+                STT
+            </td>
+            <td>
+                Dicreption
+            </td>
+            <td>
+                NameProduct
+            </td>
+            <td>
+                Quantity
+            </td>
+            <td>
+                Import Price
+            </td>
+            <td>
+                Price
+            </td>
+            <td>
+                Sale
+            </td>
+            <td>
+                Inventory
+            </td>
+            <td>
+                Edit
+            </td>
+            <td>
+                Delete
+            </td>
+        </tr>
+        <tbody id="body">
 
-    </tbody>
-</table>
+        </tbody>
+    </table>
 </div>
 <br>
 <script>
-    class Products{
-        constructor(mobie,importprice,quantity) {
-            this.mobie=mobie;
-            this.importprice=importprice;
-            this.quantity=quantity;
-            this.price=this.importprice*120/100;
-            this.sale=0;
-            this.inventory=this.quantity-this.sale;
+    class Products {
+        constructor(mobie, importprice, quantity, link) {
+            this.mobie = mobie;
+            this.importprice = importprice;
+            this.quantity = quantity;
+            this.sale = 0;
+            this.price = this.importprice * 120 / 100;
+            this.link = link;
+            this.inventory = this.quantity - this.sale
+        }
 
+        importPrice() {
+            return this.price = this.importprice * 120 / 100;
+        }
+
+        inVentory() {
+            return this.inventory = this.quantity - this.sale;
         }
     }
-    let listproducts =[];
-    let Iphone6= new Products("Iphone6",1500,30);
-    let Iphone7= new Products("Iphone7",1550,50);
-    let Iphone8= new Products("Iphone8",1600,80);
-    listproducts.push(Iphone6,Iphone7,Iphone8);
 
 
-    function displayProduct(){
-        let body="";
+    let
+        listproducts = [];
+    let
+        Iphone6 = new Products("Iphone6", 1500, 30, "iphone6.jpg");
+    let
+        Iphone7 = new Products("Iphone7", 1550, 50, "iphone7.jpg");
+    let
+        Iphone8 = new Products("Iphone8", 1600, 80, "iphone8.jpg");
+    listproducts.push(Iphone6, Iphone7, Iphone8);
+
+
+    function displayProduct() {
+        let body = "";
         for (let i = 0; i < listproducts.length; i++) {
-            body+=
+            body +=
                 "<tr>" +
-                "<td>"+(i+1)+"</td>" +
-                "<td>"+listproducts[i].mobie+"</td>"+
-                "<td>"+listproducts[i].quantity+"</td>"+
-                "<td>"+listproducts[i].importprice+"</td>"+
-                "<td>"+listproducts[i].price+"</td>"+
-                "<td><button onclick='sale();'>Sale</button></td>"+
-                "<td>"+listproducts[i].inventory+"</td>"+
+                "<td>" + (i + 1) + "</td>" +
+                "<td><img src=" + listproducts[i].link + " width='60' height='60'></td>" +
+                "<td>" + listproducts[i].mobie + "</td>" +
+                "<td>" + listproducts[i].quantity + "</td>" +
+                "<td>" + listproducts[i].importprice + "</td>" +
+                "<td>" + listproducts[i].price + "</td>" +
+                "<td><button onclick='sale(" + i + ");'>Sale</button></td>" +
+                "<td>" + listproducts[i].inventory + "</td>" +
+                "<td><button onclick='Edit(" + i + ");'>Edit</button><button onclick='Save(" + i + ");'>Save</button></td>" +
+                "<td><button onclick='Delete(" + i + ");'>Delete</button></td>" +
                 "</tr>";
         }
-        document.getElementById("body").innerHTML=body;
+        document.getElementById("body").innerHTML = body;
     }
 
 
@@ -119,19 +156,57 @@
         addnew.mobie = document.getElementById("mobie").value;
         addnew.quantity = document.getElementById("quantity").value;
         addnew.importprice = document.getElementById("price").value;
-        if (addnew.mobie==""||
-        addnew.quantity==""||
-        addnew.importprice==""){
-            setTimeout(alert("Bạn hãy điền đầy đủ thông tin sản phản trước khi Add"),2000);
-        }else{
+        addnew.link = document.getElementById("link").value;
+        if (addnew.mobie == "" ||
+            addnew.quantity == "" ||
+            addnew.importprice == "" ||
+            addnew.link == "") {
+            setTimeout(alert("Bạn hãy điền đầy đủ thông tin sản phản trước khi Add"), 2000);
+        } else {
+            addnew.importPrice();
+            addnew.inVentory();
             listproducts.push(addnew);
             displayProduct();
         }
     }
 
-    function sale(a) {
-        a = prompt("Nhập số lượng cần bán");
+    function sale(i) {
+        let a = "";
+        while (a == "" || isNaN(a)) {
+            a = prompt("Nhập số lượng cần bán");
+        }
+        let b = listproducts[i].sale + a;
+        if (b > listproducts[i].quantity) {
+            setTimeout(alert("Nhập quá số lượng tồn kho, nhập lại"), 2000)
+        } else {
+            listproducts[i].sale += a;
+            listproducts[i].inventory = listproducts[i].quantity - listproducts[i].sale;
+            displayProduct();
+        }
+    }
 
+
+    function Delete(i) {
+        for (let j = i; j < listproducts.length - 1; j++) {
+            listproducts[j] = listproducts[j + 1];
+        }
+        listproducts.length = listproducts.length - 1;
+        displayProduct();
+    }
+
+    function Edit(i) {
+        document.getElementById("mobie").value = listproducts[i].mobie;
+        document.getElementById("quantity").value = listproducts[i].quantity;
+        document.getElementById("price").value = listproducts[i].importprice;
+        document.getElementById("link").value = listproducts[i].link;
+    }
+
+    function Save(i) {
+        listproducts[i].mobie=document.getElementById("mobie").value;
+        listproducts[i].quantity=document.getElementById("quantity").value;
+        listproducts[i].importprice=document.getElementById("price").value;
+        listproducts[i].link=document.getElementById("link").value;
+        displayProduct();
     }
 
 </script>
