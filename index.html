@@ -15,7 +15,7 @@
                 NameProduct:
             </td>
             <td>
-                <input type="text" id="name">
+                <input type="text" id="mobie">
             </td>
         </tr>
         <tr>
@@ -53,7 +53,10 @@
             Quantity
         </td>
         <td>
-            Unit Price
+            Import Price
+        </td>
+        <td>
+            Price
         </td>
         <td>
             Sale
@@ -76,10 +79,13 @@
 <br>
 <script>
     class Products{
-        constructor(name,price,quantity) {
-            this.name=name;
-            this.price=price;
+        constructor(mobie,importprice,quantity) {
+            this.mobie=mobie;
+            this.importprice=importprice;
             this.quantity=quantity;
+            this.price=this.importprice*120/100;
+            this.sale=0;
+            this.inventory=this.quantity-this.sale;
 
         }
     }
@@ -89,32 +95,42 @@
     let Iphone8= new Products("Iphone8",1600,80);
     listproducts.push(Iphone6,Iphone7,Iphone8);
 
+
     function displayProduct(){
         let body="";
         for (let i = 0; i < listproducts.length; i++) {
             body+=
                 "<tr>" +
                 "<td>"+(i+1)+"</td>" +
-                "<td>"+listproducts[i].name+"</td>"+
+                "<td>"+listproducts[i].mobie+"</td>"+
                 "<td>"+listproducts[i].quantity+"</td>"+
+                "<td>"+listproducts[i].importprice+"</td>"+
                 "<td>"+listproducts[i].price+"</td>"+
+                "<td><button onclick='sale();'>Sale</button></td>"+
+                "<td>"+listproducts[i].inventory+"</td>"+
                 "</tr>";
         }
         document.getElementById("body").innerHTML=body;
     }
+
+
     function Add() {
         let addnew = new Products();
-        addnew.name = document.getElementById("name").value;
+        addnew.mobie = document.getElementById("mobie").value;
         addnew.quantity = document.getElementById("quantity").value;
-        addnew.price = document.getElementById("price").value;
-        if (addnew.name==""||
+        addnew.importprice = document.getElementById("price").value;
+        if (addnew.mobie==""||
         addnew.quantity==""||
-        addnew.price==""){
+        addnew.importprice==""){
             setTimeout(alert("Bạn hãy điền đầy đủ thông tin sản phản trước khi Add"),2000);
         }else{
             listproducts.push(addnew);
             displayProduct();
         }
+    }
+
+    function sale(a) {
+        a = prompt("Nhập số lượng cần bán");
 
     }
 
