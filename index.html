@@ -146,7 +146,8 @@
             this.sale = 0;
             this.price = this.importprice * 120 / 100;
             this.link = link;
-            this.inventory = this.quantity - this.sale
+            this.inventory = this.quantity - this.sale;
+            this.oder=0;
         }
 
         importPrice() {
@@ -159,15 +160,7 @@
     }
 
 
-    let
-        listproducts = [];
-    let
-        Iphone6 = new Products("Iphone6", 1500, 30, "iphone6.jpg");
-    let
-        Iphone7 = new Products("Iphone7", 1550, 50, "iphone7.jpg");
-    let
-        Iphone8 = new Products("Iphone8", 1600, 80, "iphone8.jpg");
-    listproducts.push(Iphone6, Iphone7, Iphone8);
+    let listproducts = JSON.parse(localStorage.getItem('data'));
 
 
     function displayProduct() {
@@ -207,13 +200,18 @@
             addnew.inVentory();
             listproducts.push(addnew);
             displayProduct();
+            document.getElementById("mobie").value="";
+            document.getElementById("quantity").value="";
+            document.getElementById("price").value="";
+            document.getElementById("link").value="";
         }
+        localStorage.setItem('data',JSON.stringify(listproducts));
     }
 
     function sale(i) {
-        let a = "";
-        while (a == "" || isNaN(a)) {
-            a = prompt("Nhập số lượng cần bán");
+        let a=+prompt("Nhập số lượng cần bán");
+        while (isNaN(a)) {
+            a = +prompt("Nhập số lượng cần bán");
         }
         let b = listproducts[i].sale + a;
         if (b > listproducts[i].quantity) {
@@ -223,6 +221,7 @@
             listproducts[i].inventory = listproducts[i].quantity - listproducts[i].sale;
             displayProduct();
         }
+        localStorage.setItem('data',JSON.stringify(listproducts));
     }
 
 
@@ -235,6 +234,7 @@
             listproducts.length = listproducts.length - 1;
             displayProduct();
         }
+        localStorage.setItem('data',JSON.stringify(listproducts));
     }
 
     function Edit(i) {
@@ -268,6 +268,7 @@
         listproducts[i].inVentory();
         displayProduct();
         document.getElementById("edit").innerHTML = "";
+        localStorage.setItem('data',JSON.stringify(listproducts));
     }
 
     function Search() {
@@ -284,18 +285,18 @@
             }
             if (index !=-1){
                 let body =
-                "<tr>" +
-                "<td>" + (index + 1) + "</td>" +
-                "<td><img src=" + listproducts[index].link + " width='60' height='60'></td>" +
-                "<td>" + listproducts[index].mobie + "</td>" +
-                "<td>" + listproducts[index].quantity + "</td>" +
-                "<td>" + listproducts[index].importprice + "</td>" +
-                "<td>" + listproducts[index].price + "</td>" +
-                "<td><button onclick='sale(" + index + ");'>Sale</button></td>" +
-                "<td>" + listproducts[index].inventory + "</td>" +
-                "<td><button onclick='Edit(" + index + ");'>Edit</button></td>" +
-                "<td><button onclick='Delete(" + index + ");'>Delete</button></td>" +
-                "</tr>";
+                    "<tr>" +
+                    "<td>" + (index + 1) + "</td>" +
+                    "<td><img src=" + listproducts[index].link + " width='60' height='60'></td>" +
+                    "<td>" + listproducts[index].mobie + "</td>" +
+                    "<td>" + listproducts[index].quantity + "</td>" +
+                    "<td>" + listproducts[index].importprice + "</td>" +
+                    "<td>" + listproducts[index].price + "</td>" +
+                    "<td><button onclick='sale(" + index + ");'>Sale</button></td>" +
+                    "<td>" + listproducts[index].inventory + "</td>" +
+                    "<td><button onclick='Edit(" + index + ");'>Edit</button></td>" +
+                    "<td><button onclick='Delete(" + index + ");'>Delete</button></td>" +
+                    "</tr>";
                 document.getElementById("body").innerHTML = body;
             }else{
                 alert("Không tìm thấy");
